@@ -79,7 +79,7 @@ export class FormGeneratorComponent implements OnInit {
     this.submitted = true;
     Object.keys(this.formFields).forEach(key => this.validateField(key));
     if (Object.values(this.formFields).every(field => !field.error)) {
-      console.log(this.formGroup)
+      // console.log(this.formGroup)
     this.getSubmit(this.formGroup.value)
     }
   }

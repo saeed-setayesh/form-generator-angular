@@ -48,6 +48,7 @@ export class AppComponent {
     date: {
       type: 'date',
       label: 'Year',
+      desciption:"please enter your name",
     },
     birthday: {
       type: 'date',
@@ -60,11 +61,6 @@ export class AppComponent {
     terms: {
       type: 'checkbox',
       label: 'I accept the terms and conditions',
-      required: true,
-    },
-    terms2: {
-      type: 'checkbox',
-      label: 'I do this on my own desion',
       required: true,
     },
     what: {
