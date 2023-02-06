@@ -1,0 +1,40 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div *ngFor="let field of formFields | keyvalue">
+    <div [ngClass]="{ 'divider': true, 'flex items-center': field.value.type === 'checkbox' }" [ngSwitch]="field.value.type">
+      <label>{{field.value.label}}:</label>
+      <input *ngSwitchCase="'text'" placeholder="{{field.value.placeholder}}" type="text" [formControlName]="field.key"  [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+      
+      <textarea *ngSwitchCase="'textarea'" placeholder="{{field.value.placeholder}}" [formControlName]="field.key"  title="{{field.value.pattern?.source}}"></textarea>
+
+      <input *ngSwitchCase="'number'" placeholder="{{field.value.placeholder}}" type="number" [formControlName]="field.key"  [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+
+      <input *ngSwitchCase="'email'" placeholder="{{field.value.placeholder}}" type="email" [formControlName]="field.key"  [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+
+      <input *ngSwitchCase="'date'" max="{{field.value.max}}" placeholder="{{field.value.placeholder}}" type="date" [formControlName]="field.key"  (focus)="validateField(field.key)" [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+
+      <ng-container *ngSwitchCase="'range'">
+        <input max="{{field.value.max}}" placeholder="{{field.value.placeholder}}" type="date" [formControlName]="'from'"  (focus)="validateField('from')" [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+        <input max="{{field.value.max}}" min="{{formGroup.value['from']}}" placeholder="{{field.value.placeholder}}" type="date" [formControlName]="'to'"  (focus)="validateField('to')" [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+      </ng-container>
+
+      <input class='w-auto' *ngSwitchCase="'checkbox'" placeholder="{{field.value.placeholder}}" type="checkbox" [formControlName]="field.key"  [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/>
+
+<div class="flex" *ngSwitchCase="'radio'">
+  <label *ngFor="let option of field.value.options" [ngClass]="'flex items-center'">
+    <input placeholder="{{field.value.placeholder}}" type="radio" [value]="option" [formControlName]="field.key"  [pattern]="field.value.pattern?.source" title="{{field.value.pattern?.source}}"/> {{option}}
+  </label>
+</div>
+
+<select *ngSwitchCase="'select'"  [formControlName]="field.key"  title="{{field.value.pattern?.source}}">
+  <option *ngFor="let option of field.value.options" [value]="option">{{option}}</option>
+</select>
+
+<p>{{field.value.description}}</p>
+<div *ngIf="field.value.error" class="error">{{field.value.error}}</div>
+</div>
+</div>
+
+<div class="flex justify-cneter">
+  <button type="submit">Submit</button>
+</div>
+</form>
